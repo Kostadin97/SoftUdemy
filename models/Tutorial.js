@@ -20,9 +20,12 @@ const tutorialSchema = new mongoose.Schema({
   },
   creationDate: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  enrolledUsers: [] 
+  enrolledUsers: [],
+  author: {
+    type: String,
+  }
 });
 
 module.exports = mongoose.model("Tutorial", tutorialSchema);

@@ -1,16 +1,16 @@
-const Tutorial = require('../models/Tutorial');
+const Tutorial = require("../models/Tutorial");
 
 const create = (data) => {
-    return new Tutorial(data).save();
-}
+  return new Tutorial(data).save();
+};
 
 async function getAll() {
-    let tutorials = await Tutorial.find({}).lean();
+  let tutorials = await Tutorial.find({}).lean();
 
-    return tutorials;
+  return tutorials;
 }
 
 module.exports = {
-    create,
-    getAll,
-}
+  create,
+  getAll,
+};
