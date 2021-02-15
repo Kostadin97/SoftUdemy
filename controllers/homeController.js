@@ -1,17 +1,12 @@
 const router = require("express").Router();
 
-const isAuthenticated = require("../middlewares/isAuthenticated");
-const isLoggedIn = require("../middlewares/isLoggedIn");
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get("/", (req, res) => {
-  if (req.cookies["USER_SESSION"]) {
-    res.render("homeUser", { title: "Home Page" });
-  } else {
-    res.render("homeGuest", { title: "Home Page" });
-  }
+router.get("/", authMiddleware.isGuest, (req, res) => {
+  res.render('homeUser');
 });
 
-router.get('/create', isAuthenticated, (req, res) =>{
+router.get('/create', authMiddleware.isAuthenticated, (req, res) =>{
   res.render('create', { title: 'Create Course' });
 });
 
