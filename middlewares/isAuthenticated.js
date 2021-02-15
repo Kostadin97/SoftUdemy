@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
   if (!req.user) {
-    return res.render('homeGuest');
+    return res.redirect("/auth/login");
   }
   next();
 };

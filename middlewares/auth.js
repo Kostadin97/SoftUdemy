@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 const cookieName = "USER_SESSION";
-const secret = "SomeVerySecretKey";
+const secret = "navcho";
 
 module.exports = function () {
   return (req, res, next) => {
-    let token = req.token[cookieName];
+    let token = req.cookies[cookieName];
     if (token) {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
@@ -16,7 +16,6 @@ module.exports = function () {
         }
       });
     }
-
     next();
   };
 };

@@ -3,18 +3,18 @@ const authService = require("../services/authService");
 const router = Router();
 const cookieName = "USER_SESSION";
 
-// const isGuest = require("../middlewares/isGuest");
-// const isAuthenticated = require("../middlewares/isAuthenticated");
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const isLoggedIn = require("../middlewares/isLoggedIn");
 
-router.get("/login", (req, res) => {
+router.get("/login", isLoggedIn, (req, res) => {
   res.render("login", { title: "Login Page" });
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedIn, (req, res) => {
   res.render("register", { title: "Register Page" });
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", isLoggedIn, async (req, res) => {
   const { username, password, repeatPassword } = req.body;
   const passwordMessage = "Passwords must be the same!";
 
@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", isLoggedIn, async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", isAuthenticated, (req, res) => {
   res.clearCookie(cookieName);
   res.redirect("/");
 });
