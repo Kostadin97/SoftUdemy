@@ -15,8 +15,18 @@
                 <h3 class="my-3">Description</h3>
                 <p>{{ tutorial.description }}</p>
 
+                {{#if isAuthor}}
                 <a class="btn btn-danger" href="/delete/{{ tutorial._id }}">Delete</a>
                 <a class="btn btn-warning" href="/edit/{{ tutorial._id }}">Edit</a>
+                <br>
+                <br>
+                {{>comment}}
+                <a class="btn btn-warning" href="/like/{{ tutorial._id }}">Like</a>
+                {{else}}
+                {{>comment}}
+                <a class="btn btn-warning" href="/like/{{ tutorial._id }}">Like</a>
+                {{/if}}
+
                 {{#if iHaveEnrolled}}
                 <div>
                     <br>

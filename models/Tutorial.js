@@ -24,8 +24,11 @@ const tutorialSchema = new mongoose.Schema({
   },
   enrolledUsers: [],
   author: {
-    type: String,
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  comments: [],
+  likes: [],
 });
 
 module.exports = mongoose.model("Tutorial", tutorialSchema);

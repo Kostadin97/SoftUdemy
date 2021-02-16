@@ -9,14 +9,16 @@ async function getAll(query) {
   let tutorials = await Tutorial.find({}).lean();
 
   if (query.search) {
-    tutorials = tutorials.filter(x => x.title.toLowerCase().includes(query.search));
-}
+    tutorials = tutorials.filter((x) =>
+      x.title.toLowerCase().includes(query.search)
+    );
+  }
 
   return tutorials;
 }
 
 function getOne(id) {
-  return Tutorial.findById(id).lean();  
+  return Tutorial.findById(id).lean();
 }
 
 function deleteTutorial(id) {
@@ -35,11 +37,29 @@ async function enroll(tutorialId, userId) {
   return tutorial.save();
 }
 
+async function like(tutorialId, userId) {
+  let tutorial = await Tutorial.findById(tutorialId);
+  let user = await User.findById(userId);
+
+  tutorial.likes.push(user._id);
+  return tutorial.save();
+}
+
+async function comment(tutorialId, comment) {
+  let tutorial = await Tutorial.findById(tutorialId);
+
+  tutorial.comments.push(comment);
+  return tutorial.save();
+}
+
+
 module.exports = {
   create,
   getAll,
   getOne,
   deleteTutorial,
   editTutorial,
-  enroll
+  enroll,
+  comment,
+  like
 };
