@@ -2,10 +2,10 @@
     <h1 class="text-center">Courses</h1>
     <section>
         <a href="/create" class="btn btn-warning ">Create Course</a>
-        <form class="search float-right">
+        <form action="/" method="GET" class="search float-right">
             <label>Search: </label>
-            <input type="text">
-            <input type="submit" class="btn btn-primary" value="Search">
+            <input type="text" name="search">
+            <input type="submit" class="btn btn-primary" value="search">
         </form>
     </section>
 
@@ -14,9 +14,10 @@
             <div class="card-deck d-flex justify-content-center">
                 {{#each tutorials}}
                 {{>tutorial}}
+                {{else}}
+                <h3 class="text-center">No courses...</h3>
                 {{/each}}
             </div>
         </div>
     </div>
-    <h3 class="text-center">No courses...</h3>
 </main>
