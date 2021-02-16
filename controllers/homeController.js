@@ -16,8 +16,21 @@ router.get("/create", authMiddleware.isAuthenticated, (req, res) => {
 });
 
 router.get("/details/:tutorialId", async (req, res) => {
-  let tutorial = await tutorialService.getOne(req.params.tutorialId);
-  res.render("details", { title: "Details Page", tutorial });
+  const tutorial = await tutorialService.getOne(req.params.tutorialId);
+  const userId = await res.locals.user._id;
+  let iHaveEnrolled = await false;
+
+  try {
+    if (tutorial.enrolledUsers.toString().includes(userId)) {
+      iHaveEnrolled = true;
+    } else {
+      iHaveEnrolled = false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.render("details", { title: "Details Page", tutorial, iHaveEnrolled });
 });
 
 router.get("/delete/:tutorialId", (req, res) => {
@@ -30,6 +43,16 @@ router.get("/delete/:tutorialId", (req, res) => {
 router.get("/edit/:tutorialId", async (req, res) => {
   let tutorial = await tutorialService.getOne(req.params.tutorialId);
   res.render("edit", { title: "Edit Tutorial", tutorial });
+});
+
+router.get("/enroll/:tutorialId", async (req, res) => {
+  let hotel = await tutorialService.getOne(req.params.tutorialId);
+  let user = await res.locals.user._id;
+
+  tutorialService
+    .enroll(hotel._id, user)
+    .then(() => res.redirect(`/details/${hotel._id}`))
+    .catch(() => res.status(500).end());
 });
 
 router.post("/edit/:tutorialId", (req, res) => {

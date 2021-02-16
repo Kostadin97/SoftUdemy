@@ -1,4 +1,5 @@
 const Tutorial = require("../models/Tutorial");
+const User = require("../models/User");
 
 const create = (data) => {
   return new Tutorial(data).save();
@@ -26,10 +27,19 @@ function editTutorial(id, data) {
   return Tutorial.findByIdAndUpdate(id, data);
 }
 
+async function enroll(tutorialId, userId) {
+  let tutorial = await Tutorial.findById(tutorialId);
+  let user = await User.findById(userId);
+
+  tutorial.enrolledUsers.push(user._id);
+  return tutorial.save();
+}
+
 module.exports = {
   create,
   getAll,
   getOne,
   deleteTutorial,
-  editTutorial
+  editTutorial,
+  enroll
 };
