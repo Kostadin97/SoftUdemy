@@ -78,14 +78,12 @@ router.get("/like/:tutorialId", async (req, res) => {
 router.post("/comment/:tutorialId", async (req, res) => {
   let tutorial = await tutorialService.getOne(req.params.tutorialId);
   let user = await res.locals.user._id;
+  const date = new Date();
 
   let comment = await {
     id: user,
     commentContent: req.body,
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+    date: date
   };
 
   tutorialService
