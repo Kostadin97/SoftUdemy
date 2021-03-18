@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 module.exports = (app) => {
-  mongoose.connect("mongodb://localhost:27017/softudemy", {
+  mongoose.connect("mongodb+srv://admin:admin@cluster.6ztzo.mongodb.net/softudemy?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: true,
